@@ -7,4 +7,14 @@ const router = express.Router()
  * Create new message
  */
 
-router.post('/')
+router.post('/', async (req, res) => {
+    try{
+        let message = new MessageModel(req.body)
+        message = await message.save()
+        res.status(201).send({message: message})
+    } catch(e) {
+        res.status(400).send(e)
+    }
+})
+
+module.exports = router
