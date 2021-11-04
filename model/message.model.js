@@ -1,16 +1,15 @@
 const mongoose = require('./mongoose')
-const userSchema = require('./user.model')
 const UserModel = require('./user.model')
-
+const DiscussionModel = require('./discussion.model')
 const messageSchema = new mongoose.Schema({
     author: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
         required: true,
         index: true,
         validate: {
             validator: async (value) => {
-                const users = await UserModel.find({username: value});
-                return users.length >= 1
+                return UserModel.findOne({id: value});
             },
             message: "User doesn't exist!"
         }
@@ -20,7 +19,8 @@ const messageSchema = new mongoose.Schema({
         required: true
     },
     discussion: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "discussion",
         required: true,
         validate: {
             validator: async (value) => {

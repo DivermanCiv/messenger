@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 const UserController = require('./controller/user.controller')
 const AuthController = require('./controller/auth.controller')
+const DiscussionController = require('./controller/discussion.controller')
 const MessageController = require('./controller/message.controller')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', UserController)
 app.use('/api/auth', AuthController)
+app.use('/api/discussions', DiscussionController)
 app.use('/api/messages', MessageController)
 
 app.listen(port, () => {
