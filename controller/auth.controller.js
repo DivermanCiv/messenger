@@ -26,7 +26,7 @@ router.post('/login',
     }
     const samePassword = await user.comparePassword(req.body.password)
     if (!samePassword) {
-      return res.status(404).send({message: 'password invalid'})
+      return res.status(400).send({message: 'password invalid'})
     }
     const token = jsonwebtoken.sign({
       _id: user._id
