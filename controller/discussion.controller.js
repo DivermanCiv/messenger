@@ -28,10 +28,15 @@ router.post('/', async (req, res) => {
  */
 
 router.get('/', async (req, res) => {
+    const offset = maxDiscussionsDisplayed * req.body.page - maxDiscussionsDisplayed
+    if(req.body.page === 0){
+        req.body.page = 1
+    }
+    console.log(req.body.page)
+    console.log(offset)
     const discussions = await DiscussionModel
-        .find()
+        .find(null, null,{offset: offset, limit: maxDiscussionsDisplayed} )
         .sort({'createdAt': 1})
-        .limit(maxDiscussionsDisplayed)
     if (discussions.length === 0){
         return res.status(404).send({message: i18n.t('No discussion to display')})
     }
