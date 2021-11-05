@@ -3,6 +3,7 @@ const {param, validationResult} = require("express-validator");
 const express = require("express");
 const UserModel = require("../model/user.model");
 const router = express.Router();
+const i18n = require('../i18n.config')
 
 /**
  * Create a discussion
@@ -22,17 +23,13 @@ router.post('/', async (req, res) => {
 })
 
 /**
- * Find discussion
+ * Display discussions
  */
 
 router.get('/', async (req, res) => {
     const discussions = await DiscussionModel.find()
     res.send(discussions)
 })
-
-/**
- * Display discussions
- */
 
 /**
  *  Delete discussion
@@ -45,14 +42,14 @@ router.get('/', async (req, res) => {
 router.put('/add/:id/:user_id',
     param('id')
         .notEmpty()
-        .withMessage('id is required')
+        .withMessage(i18n.t('id is required'))
         .isMongoId()
-        .withMessage('id needs to be a mongodb id'),
+        .withMessage(i18n.t('id needs to be a mongodb id')),
     param('user_id')
         .notEmpty()
-        .withMessage('id is required')
+        .withMessage(i18n.t('id is required'))
         .isMongoId()
-        .withMessage('id needs to be a mongodb id'),
+        .withMessage(i18n.t('id needs to be a mongodb id')),
     (req, res, next) => {
     const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -63,11 +60,14 @@ router.put('/add/:id/:user_id',
     async (req, res) => {
         const user = await UserModel.findOne({_id: req.params.user_id})
         if (!user) {
-            res.status(404).send({message: 'user not found'})
+            res.status(404).send({message: i18n.t('user not found')})
         }
         const discussion = await DiscussionModel.findOne({_id: req.params.id})
         if(!discussion){
-            res.status(404).send({message: 'discussion not found'})
+            res.status(404).send({message: i18n.t('discussion not found')})
+        }
+        if (discussion.members.indexOf(user)){
+            res.status(400).send({message: i18n.t('user already in discussion')})
         }
         discussion.members.push(user)
         discussion.save()

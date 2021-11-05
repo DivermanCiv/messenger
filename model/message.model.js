@@ -1,6 +1,8 @@
 const mongoose = require('./mongoose')
 const UserModel = require('./user.model')
 const DiscussionModel = require('./discussion.model')
+const i18n = require('../i18n.config')
+
 const messageSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -11,7 +13,7 @@ const messageSchema = new mongoose.Schema({
             validator: async (value) => {
                 return UserModel.findOne({id: value});
             },
-            message: "User doesn't exist!"
+            message: i18n.t("User doesn't exist!")
         }
     },
     content: {
@@ -27,7 +29,7 @@ const messageSchema = new mongoose.Schema({
                 const discussions = await DiscussionModel.find({_id: value});
                 return discussions.length >= 1
             },
-            message: "The discussion doesn't exist!"
+            message: i18n.t("The discussion doesn't exist!")
         }
     },
 }, {timestamps: true});

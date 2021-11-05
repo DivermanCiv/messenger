@@ -1,6 +1,7 @@
 const mongoose = require('./mongoose')
 const bcrypt = require('bcrypt')
 const salt = '$2b$10$uMMerxBWR8pPg8NFXLewXe'
+const i18n = require('../i18n.config')
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -12,7 +13,7 @@ const userSchema = new mongoose.Schema({
         const users = await UserModel.find({username: value});
         return users.length === 0
       },
-      message: 'User already exists!'
+      message: i18n.t('User already exists!')
     }
   },
   password: {

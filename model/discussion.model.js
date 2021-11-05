@@ -1,5 +1,6 @@
 const mongoose = require('./mongoose')
 const UserModel= require("./user.model");
+const i18n = require('../i18n.config')
 
 const discussionSchema = new mongoose.Schema({
     name: {
@@ -14,7 +15,7 @@ const discussionSchema = new mongoose.Schema({
             validator: async (value) => {
                 return UserModel.findOne({_id: value})
             },
-            message: "User doesn't exist!"
+            message: i18n.t("User doesn't exist!")
         }
     },
     members: [{

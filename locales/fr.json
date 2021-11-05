@@ -1,0 +1,15 @@
+{
+  "User already exists!": "Cet utilisateur existe déjà !",
+  "id is required": "id est requis",
+  "id needs to be a mongodb id": "id doit être un id MongoDB",
+  "user not found" : "Utilisateur introuvable",
+  "discussion not found": "Discussion introuvable",
+  "user already in discussion": "Utilisateur déjà présent dans la discussion",
+  "User doesn't exist!": "Cet utilisateur n'existe pas !",
+  "The discussion doesn't exist!": "Cette discussion n'existe pas",
+  "username is required": "Un nom d'utilisateur est nécessaire",
+  "password is required": "Un mot de passe est nécessaire",
+  "password invalid": "Mot de passe invalide",
+  "unauthorized": "Action non autorisée"
+
+}

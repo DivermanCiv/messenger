@@ -9,6 +9,8 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jsonwebtoken = require("jsonwebtoken");
 const {secret} = require('./config')
+const i18next = require('./i18n.config')
+
 
 app.use(bodyParser.json())
 app.use(cookieParser())

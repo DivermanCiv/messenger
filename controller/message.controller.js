@@ -1,7 +1,9 @@
 const express = require('express')
 const MessageModel = require("../model/message.model");
+const DiscussionModel = require('../model/discussion.model');
 const {param, validationResult} = require("express-validator");
 const router = express.Router()
+const i18n = require('../i18n.config')
 
 /**
  * Create new message
