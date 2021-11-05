@@ -12,6 +12,7 @@
   "password invalid": "Password invalid",
   "unauthorized": "Unauthorized",
   "message not found": "Message not found",
-  "Message deleted": "Message deleted"
+  "Message deleted": "Message deleted",
+  "action doesn't exist": "Action doesn't exist"
 
 }

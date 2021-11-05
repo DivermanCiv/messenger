@@ -12,6 +12,7 @@
   "password invalid": "Mot de passe invalide",
   "unauthorized": "Action non autorisée",
   "message not found": "Message introuvable",
-  "Message deleted": "Message supprimé"
+  "Message deleted": "Message supprimé",
+  "action doesn't exist": "Action inexistante"
 
 }

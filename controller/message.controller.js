@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 })
 
 /**
- * Edit a message
+ * Edit or delete a message
  */
 
 router.put('/edit/:id',
@@ -43,17 +43,25 @@ router.put('/edit/:id',
             res.status(404).send({message: i18n.t('message not found')})
         }
         message.content_history.push(message.content)
-        message.content = req.body.content
+
+        if(req.body.action === "edit"){
+            message.content = req.body.content
+        } else if(req.body.action === "delete"){
+            message.content = i18n.t('Message deleted')
+        } else {
+            return res.status(404).send({message: i18n.t('action doesn\'t exist')})
+        }
+
         message.save()
         res.send({message})
     }
 )
 
 /**
- * Delete a message
+ * Display messages
  */
 
-router.put('/delete/:id',
+router.get('/:id',
     param('id')
         .notEmpty()
         .withMessage(i18n.t('id is required'))
@@ -67,15 +75,11 @@ router.put('/delete/:id',
         next()
     },
     async (req, res) => {
-        const message = await MessageModel.findOne({_id: req.params.id})
-        if (!message) {
+        const messages = await MessageModel.find({discussion: req.params.id})
+        if (!messages) {
             res.status(404).send({message: i18n.t('message not found')})
         }
-        message.content_history.push(message.content)
-        message.content = i18n.t('Message deleted')
-        message.save()
-        res.send({message})
-    }
-)
+        res.send({messages})
+    })
 
 module.exports = router
