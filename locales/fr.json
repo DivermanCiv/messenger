@@ -14,6 +14,7 @@
   "message not found": "Message introuvable",
   "Message deleted": "Message supprimé",
   "action doesn't exist": "Action inexistante",
-  "No message to display": "Aucun message à afficher"
+  "No message to display": "Aucun message à afficher",
+  "No discussion to display": "Aucune discussion à afficher"
 
 }

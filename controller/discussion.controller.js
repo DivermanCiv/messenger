@@ -1,10 +1,10 @@
 const DiscussionModel = require("../model/discussion.model")
-const {param, validationResult} = require("express-validator");
-const express = require("express");
-const UserModel = require("../model/user.model");
-const MessageModel = require("../model/message.model")
-const router = express.Router();
+const {param, validationResult} = require("express-validator")
+const express = require("express")
+const UserModel = require("../model/user.model")
+const router = express.Router()
 const i18n = require('../i18n.config')
+const {maxDiscussionsDisplayed} = require("../config")
 
 /**
  * Create a discussion
@@ -31,7 +31,10 @@ router.get('/', async (req, res) => {
     const discussions = await DiscussionModel
         .find()
         .sort({'createdAt': 1})
-        .limit(2)
+        .limit(maxDiscussionsDisplayed)
+    if (discussions.length === 0){
+        return res.status(404).send({message: i18n.t('No discussion to display')})
+    }
     res.send(discussions)
 })
 

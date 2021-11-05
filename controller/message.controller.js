@@ -1,10 +1,9 @@
 const express = require('express')
 const MessageModel = require("../model/message.model");
-const DiscussionModel = require('../model/discussion.model');
 const {param, validationResult} = require("express-validator");
 const router = express.Router()
 const i18n = require('../i18n.config')
-const UserModel = require("../model/user.model");
+const {maxMessagesDisplayed} = require("../config")
 
 /**
  * Create new message
@@ -78,7 +77,7 @@ router.get('/:id',
         const messages = await MessageModel
             .find({discussion: req.params.id})
             .sort({'createdAt': 1})
-            .limit(3)
+            .limit(maxMessagesDisplayed)
         if (messages.length === 0){
             return res.status(404).send({message: i18n.t('No message to display')})
         }

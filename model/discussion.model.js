@@ -24,6 +24,12 @@ const discussionSchema = new mongoose.Schema({
     }],
 }, {timestamps: true});
 
+discussionSchema.pre('save', function (next) {
+    const discussion = this
+    discussion.members.unshift(discussion.author)
+    next()
+})
+
 const DiscussionModel = mongoose.model('discussion', discussionSchema);
 
 module.exports = DiscussionModel
