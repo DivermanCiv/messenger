@@ -75,9 +75,12 @@ router.get('/:id',
         next()
     },
     async (req, res) => {
-        const messages = await MessageModel.find({discussion: req.params.id})
-        if (!messages) {
-            res.status(404).send({message: i18n.t('message not found')})
+        const messages = await MessageModel
+            .find({discussion: req.params.id})
+            .sort({'createdAt': 1})
+            .limit(3)
+        if (messages.length === 0){
+            return res.status(404).send({message: i18n.t('No message to display')})
         }
         res.send({messages})
     })

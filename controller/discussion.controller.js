@@ -28,7 +28,10 @@ router.post('/', async (req, res) => {
  */
 
 router.get('/', async (req, res) => {
-    const discussions = await DiscussionModel.find()
+    const discussions = await DiscussionModel
+        .find()
+        .sort({'createdAt': 1})
+        .limit(2)
     res.send(discussions)
 })
 

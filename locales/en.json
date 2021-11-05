@@ -13,6 +13,7 @@
   "unauthorized": "Unauthorized",
   "message not found": "Message not found",
   "Message deleted": "Message deleted",
-  "action doesn't exist": "Action doesn't exist"
+  "action doesn't exist": "Action doesn't exist",
+  "No message to display": "No message to display"
 
 }
