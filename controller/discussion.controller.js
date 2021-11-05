@@ -2,6 +2,7 @@ const DiscussionModel = require("../model/discussion.model")
 const {param, validationResult} = require("express-validator");
 const express = require("express");
 const UserModel = require("../model/user.model");
+const MessageModel = require("../model/message.model")
 const router = express.Router();
 const i18n = require('../i18n.config')
 
@@ -34,6 +35,11 @@ router.get('/', async (req, res) => {
 /**
  *  Delete discussion
  */
+
+router.delete('/', async(req, res) => {
+    await DiscussionModel.findOneAndDelete({_id: req.body.id})
+    res.send({})
+})
 
 /**
  * Add members to the discussion

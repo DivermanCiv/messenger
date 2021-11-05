@@ -10,6 +10,8 @@
   "username is required": "Un nom d'utilisateur est nécessaire",
   "password is required": "Un mot de passe est nécessaire",
   "password invalid": "Mot de passe invalide",
-  "unauthorized": "Action non autorisée"
+  "unauthorized": "Action non autorisée",
+  "message not found": "Message introuvable",
+  "Message deleted": "Message supprimé"
 
 }

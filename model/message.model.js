@@ -20,6 +20,9 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    content_history: {
+        type: Array,
+    },
     discussion: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "discussion",
