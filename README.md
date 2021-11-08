@@ -15,7 +15,7 @@ School project aiming to create the back-end part of a messenger application.
 
 ## Functionalities
 
-###Users
+### Users
 
 ---
 
