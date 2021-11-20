@@ -3,7 +3,7 @@ const MessageModel = require("../model/message.model");
 const {param, validationResult} = require("express-validator");
 const router = express.Router()
 const i18n = require('../i18n.config')
-const {maxMessagesDisplayed} = require("../config")
+const {maxMessagesDisplayed, maxDiscussionsDisplayed} = require("../config")
 
 /**
  * Create new message
@@ -74,9 +74,15 @@ router.get('/:id',
         next()
     },
     async (req, res) => {
+        if (req.body.page === 0) {
+            req.body.page = 1
+        }
+        let page_number = req.body.page
+        let offset = maxMessagesDisplayed * page_number - maxMessagesDisplayed
         const messages = await MessageModel
             .find({discussion: req.params.id})
             .sort({'createdAt': 1})
+            .skip(offset)
             .limit(maxMessagesDisplayed)
         if (messages.length === 0){
             return res.status(404).send({message: i18n.t('No message to display')})
