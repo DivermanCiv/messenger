@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const UserController = require('./controller/user.controller')
 const AuthController = require('./controller/auth.controller')
 const DiscussionController = require('./controller/discussion.controller')
@@ -10,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const jsonwebtoken = require("jsonwebtoken");
 const {secret} = require('./config')
 const i18next = require('./i18n.config')
+const csrf = require('csurf')
 
 
 app.use(bodyParser.json())
@@ -28,5 +30,5 @@ app.use('/api/discussions', DiscussionController)
 app.use('/api/messages', MessageController)
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Messenger listening at http://localhost:${port}`)
 })
