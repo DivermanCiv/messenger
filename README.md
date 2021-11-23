@@ -86,6 +86,6 @@ The number of discussions displayed on a same page can be changed with maxMessag
 
 ---
 
-- Localization (fr/en) is included and can be found in /locales in their respective files. Default language is french
+- Localization (fr/en) is included and can be found in /locales in their respective files. Language can be changed in config.js with "fr" or "en".
 - A .env file must be created if one should change the port number from the default 3000. The .env.sample file is there as a model for this file.
 - A documentation is available at out/index.html

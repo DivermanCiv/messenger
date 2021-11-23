@@ -3,6 +3,8 @@ const UserModel = require("../model/user.model");
 const {param, validationResult} = require("express-validator");
 const router = express.Router()
 const i18n = require('../i18n.config')
+const myHelper = require('../helpers/helper')
+
 
 /**
  * @namespace userController
@@ -22,9 +24,7 @@ router.get('/', async (req, res) => {
  * @memberof userController
  */
 router.get('/me', async (req, res) => {
-  if (!req.user) {
-    return res.status(401).send({message: i18n.t('unauthorized')})
-  }
+  myHelper.isUserLogged(req, res)
   const user = await UserModel.findOne({_id: req.user._id})
   if (!user) {
     return res.status(404).send({message: i18n.t('user not found')})

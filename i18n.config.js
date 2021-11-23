@@ -1,7 +1,8 @@
 const i18next = require("i18next")
+const {language} = require("./config")
 
 i18next.init({
-    lng: 'fr',
+    lng: language,
     resources: {
         fr:{
             translation: require('./locales/fr.json')

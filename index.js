@@ -10,8 +10,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jsonwebtoken = require("jsonwebtoken");
 const {secret} = require('./config')
-const i18next = require('./i18n.config')
-const csrf = require('csurf')
+const i18n = require("./i18n.config");
 
 
 app.use(bodyParser.json())
@@ -22,6 +21,12 @@ app.use((req, res, next) => {
   }
   req.user = jsonwebtoken.verify(req.cookies.jwt, secret)
   next()
+})
+
+app.use((req, res)=>{
+  if (!req.user) {
+    return res.status(401).send({message: i18n.t('unauthorized')})
+  }
 })
 
 app.use('/api/users', UserController)

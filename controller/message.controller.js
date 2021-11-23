@@ -1,9 +1,11 @@
 const express = require('express')
 const MessageModel = require("../model/message.model");
+const UserModel = require("../model/user.model")
 const {param, validationResult} = require("express-validator");
 const router = express.Router()
 const i18n = require('../i18n.config')
 const {maxMessagesDisplayed, maxDiscussionsDisplayed} = require("../config")
+const myHelper = require('../helpers/helper')
 
 /**
  * @namespace messageController
@@ -14,6 +16,7 @@ const {maxMessagesDisplayed, maxDiscussionsDisplayed} = require("../config")
  * @memberof messageController
  */
 router.post('/', async (req, res) => {
+    myHelper.isUserLogged(req, res)
     try{
         let message = new MessageModel(req.body)
         message = await message.save()
@@ -88,6 +91,7 @@ router.get('/:id',
             .sort({'createdAt': 1})
             .skip(offset)
             .limit(maxMessagesDisplayed)
+        myHelper.isUserLogged(req, res)
         if (messages.length === 0){
             return res.status(404).send({message: i18n.t('No message to display')})
         }
