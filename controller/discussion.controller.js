@@ -5,6 +5,7 @@ const UserModel = require("../model/user.model")
 const router = express.Router()
 const i18n = require('../i18n.config')
 const {maxDiscussionsDisplayed} = require("../config")
+const myHelper = require('../helpers/helper')
 
 /**
  * @namespace discussionController
@@ -14,7 +15,7 @@ const {maxDiscussionsDisplayed} = require("../config")
  * Create a discussion
  * @memberof discussionController
  */
-router.post('/', async (req, res) => {
+router.post('/',async (req, res) => {
     try{
         let discussion = new DiscussionModel(req.body)
         discussion = await discussion.save()
@@ -38,7 +39,7 @@ router.get('/', async (req, res) => {
     let page_number = req.body.page
     let offset = maxDiscussionsDisplayed * page_number - maxDiscussionsDisplayed
     const discussions = await DiscussionModel
-        .find()
+        .find({members : req.user._id})
         .skip(offset)
         .limit(maxDiscussionsDisplayed)
         .sort({'createdAt': 1})
@@ -52,9 +53,14 @@ router.get('/', async (req, res) => {
  *  Delete discussion
  *  @memberof discussionController
  */
-router.delete('/', async(req, res) => {
-    await DiscussionModel.findOneAndDelete({_id: req.body.id})
-    res.send({})
+router.delete('/', async(req, res, next) => {
+    const discussion = await DiscussionModel.findOne({_id: req.body.id})
+    if(req.user._id !== discussion.author._id.valueOf()){
+        return res.status(401).send({message: i18n.t('unauthorized')})
+    } else {
+        await DiscussionModel.findOneAndDelete({_id: req.body.id})
+        res.send({})
+    }
 })
 
 /**
@@ -82,18 +88,21 @@ router.put('/add/:id/:user_id',
     async (req, res) => {
         const user = await UserModel.findOne({_id: req.params.user_id})
         if (!user) {
-            res.status(404).send({message: i18n.t('user not found')})
+            return res.status(404).send({message: i18n.t('user not found')})
         }
         const discussion = await DiscussionModel.findOne({_id: req.params.id})
         if(!discussion){
-            res.status(404).send({message: i18n.t('discussion not found')})
+            return res.status(404).send({message: i18n.t('discussion not found')})
+        } else if (!discussion.members.includes(req.user._id)){
+            return res.status(401).send({message: i18n.t('unauthorized')})
+        } else if (discussion.members.includes(user._id)){
+            return res.status(400).send({message: i18n.t('user already in discussion')})
+        } else {
+            discussion.members.push(user)
+            discussion.save()
+            return res.send({discussion})
         }
-        if (discussion.members.indexOf(user)){
-            res.status(400).send({message: i18n.t('user already in discussion')})
-        }
-        discussion.members.push(user)
-        discussion.save()
-        res.send({discussion})
+
 })
 
 module.exports = router

@@ -4,7 +4,7 @@ const UserModel = require("../model/user.model")
 const {param, validationResult} = require("express-validator");
 const router = express.Router()
 const i18n = require('../i18n.config')
-const {maxMessagesDisplayed, maxDiscussionsDisplayed} = require("../config")
+const {maxMessagesDisplayed} = require("../config")
 const myHelper = require('../helpers/helper')
 
 /**
