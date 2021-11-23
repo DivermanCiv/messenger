@@ -5,7 +5,7 @@ function isUserLogged(req, res, next){
     if (!req.user) {
         return res.status(401).send({message: i18n.t('unauthorized')})
     }
-
+    next()
 }
 
 module.exports = {isUserLogged}

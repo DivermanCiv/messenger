@@ -14,7 +14,7 @@ const myHelper = require('../helpers/helper')
  * Find users by
  * @memberof userController
  */
-router.get('/', async (req, res) => {
+router.get('/', myHelper.isUserLogged, async (req, res) => {
   const users = await UserModel.find()
   res.send(users)
 })
@@ -23,8 +23,7 @@ router.get('/', async (req, res) => {
  * Find the current user
  * @memberof userController
  */
-router.get('/me', async (req, res) => {
-  myHelper.isUserLogged(req, res)
+router.get('/me', myHelper.isUserLogged, async (req, res) => {
   const user = await UserModel.findOne({_id: req.user._id})
   if (!user) {
     return res.status(404).send({message: i18n.t('user not found')})
@@ -42,8 +41,9 @@ router.get('/:id',
     .withMessage(i18n.t('id is required'))
     .isMongoId()
     .withMessage(i18n.t('id needs to be a mongodb id')),
+    myHelper.isUserLogged,
   (req, res, next) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
     }

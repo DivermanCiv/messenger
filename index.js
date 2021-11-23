@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const jsonwebtoken = require("jsonwebtoken");
 const {secret} = require('./config')
 const i18n = require("./i18n.config");
+const myHelper = require('./helpers/helper')
 
 
 app.use(bodyParser.json())
@@ -23,14 +24,15 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use((req, res)=>{
-  if (!req.user) {
-    return res.status(401).send({message: i18n.t('unauthorized')})
-  }
+
+app.use('/api/auth', AuthController)
+app.use('/api/users', UserController)
+
+//Check if user is logged on before accessing to /discussions and /messages routes
+app.use((req, res, next)=>{
+  myHelper.isUserLogged(req, res, next)
 })
 
-app.use('/api/users', UserController)
-app.use('/api/auth', AuthController)
 app.use('/api/discussions', DiscussionController)
 app.use('/api/messages', MessageController)
 
