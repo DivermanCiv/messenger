@@ -1,2 +1,5 @@
 node_modules
 .env
+out/fonts
+out/styles
+out/scripts
