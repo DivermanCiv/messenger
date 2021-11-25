@@ -15,6 +15,16 @@ School project aiming to create the back-end part of a messenger application.
 
 ## Functionalities
 
+### Authentication
+
+---
+
+- Login
+> POST /api/auth/login
+
+- Logout
+> DELETE /api/auth/logout
+
 ### Users
 
 ---
@@ -80,7 +90,7 @@ The number of discussions displayed on a same page can be changed with maxMessag
 
 ---
 
-- A JsonWebToken is generated when a user logins and stored in a cookie for authentication purpose.
+- A JsonWebToken is generated when a user logins and stored in a cookie for authentication purpose. The cookie is deleted when user log out or after 900 000 seconds (app. 10days) have passed.
 
 ### Other
 
