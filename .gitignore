@@ -3,3 +3,4 @@ node_modules
 out/fonts
 out/styles
 out/scripts
+.idea/*
