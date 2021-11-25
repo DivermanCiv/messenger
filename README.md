@@ -15,6 +15,16 @@ School project aiming to create the back-end part of a messenger application.
 
 ## Functionalities
 
+### Authentication
+
+---
+
+- Login
+> POST /api/auth/login
+
+- Logout
+> DELETE /api/auth/logout
+
 ### Users
 
 ---
@@ -80,7 +90,7 @@ The number of discussions displayed on a same page can be changed with maxMessag
 
 ---
 
-- A JsonWebToken is generated when a user logins and stored in a cookie for authentication purpose.
+- A JsonWebToken is generated when a user logins and stored in a cookie for authentication purpose. The cookie is deleted when user log out or after 900 000 seconds (app. 10days) have passed.
 
 ### Other
 
@@ -89,3 +99,4 @@ The number of discussions displayed on a same page can be changed with maxMessag
 - Localization (fr/en) is included and can be found in /locales in their respective files. Language can be changed in config.js with "fr" or "en".
 - A .env file must be created if one should change the port number from the default 3000. The .env.sample file is there as a model for this file.
 - A documentation is available at out/index.html
+- A postman export is available for testing. See messenger.postman_collection.json
