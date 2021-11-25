@@ -6,12 +6,14 @@ const router = express.Router()
 const i18n = require('../i18n.config')
 const {maxMessagesDisplayed} = require("../config")
 
-/**
+/** Express router providing message related routes
  * @namespace messageController
  */
 
 /**
  * Create new message
+ * @name post/
+ * @function
  * @memberof messageController
  */
 router.post('/', async (req, res) => {
@@ -32,7 +34,10 @@ router.post('/', async (req, res) => {
 
 /**
  * Edit or delete a message
+ * @name put/edit/:id
+ * @function
  * @memberof messageController
+ * @param {string} id - The mongodb id of the targeted message
  */
 router.put('/edit/:id',
     param('id')
@@ -71,7 +76,10 @@ router.put('/edit/:id',
 
 /**
  * Display messages
+ * @name get/:id
+ * @function
  * @memberof messageController
+ * @param {string} id - The mongodb id of the targeted discussion
  */
 router.get('/:id',
     param('id')

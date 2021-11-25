@@ -7,12 +7,14 @@ const i18n = require('../i18n.config')
 const {maxDiscussionsDisplayed} = require("../config")
 const myHelper = require('../helpers/helper')
 
-/**
+/** Express router providing discussion related routes
  * @namespace discussionController
  */
 
 /**
  * Create a discussion
+ * @name post/
+ * @function
  * @memberof discussionController
  */
 router.post('/',async (req, res) => {
@@ -30,6 +32,8 @@ router.post('/',async (req, res) => {
 
 /**
  * Display discussions
+ * @name get/
+ * @function
  * @memberof discussionController
  */
 router.get('/', async (req, res) => {
@@ -51,9 +55,11 @@ router.get('/', async (req, res) => {
 
 /**
  *  Delete discussion
+ *  @name delete/
+ *  @function
  *  @memberof discussionController
  */
-router.delete('/', async(req, res, next) => {
+router.delete('/', async(req, res) => {
     const discussion = await DiscussionModel.findOne({_id: req.body.id})
     if(req.user._id !== discussion.author._id.valueOf()){
         return res.status(401).send({message: i18n.t('unauthorized')})
@@ -66,8 +72,12 @@ router.delete('/', async(req, res, next) => {
 /**
  * Add members to the discussion
  * @memberof discussionController
+ * @name put/:id/:user_id
+ * @function
+ * @param {string} id - The mongodb id of the targeted discussion
+ * @param {string} user_id - the mongodb id of the targeted user
  */
-router.put('/add/:id/:user_id',
+router.put('/:id/:user_id',
     param('id')
         .notEmpty()
         .withMessage(i18n.t('id is required'))

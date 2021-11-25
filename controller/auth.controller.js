@@ -6,12 +6,14 @@ const jsonwebtoken = require('jsonwebtoken');
 const {secret} = require('../config')
 const i18n = require('../i18n.config')
 
-/**
+/** Express router providing authentication related routes
  * @namespace authController
  */
 
 /**
  * Connect user
+ * @name post/login
+ * @function
  * @memberof authController
  */
 router.post('/login',
@@ -50,6 +52,8 @@ router.post('/login',
 
 /**
  * Disconnect user
+ * @name delete/logout
+ * @function
  * @memberof authController
  */
 router.delete('/logout', async (req, res) => {

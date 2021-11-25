@@ -6,12 +6,14 @@ const i18n = require('../i18n.config')
 const myHelper = require('../helpers/helper')
 
 
-/**
+/** Express router providing user related routes
  * @namespace userController
  */
 
 /**
  * Find users by
+ * @name get/
+ * @function
  * @memberof userController
  */
 router.get('/', myHelper.isUserLogged, async (req, res) => {
@@ -21,6 +23,8 @@ router.get('/', myHelper.isUserLogged, async (req, res) => {
 
 /**
  * Find the current user
+ * @name get/me
+ * @function
  * @memberof userController
  */
 router.get('/me', myHelper.isUserLogged, async (req, res) => {
@@ -33,7 +37,10 @@ router.get('/me', myHelper.isUserLogged, async (req, res) => {
 
 /**
  * Find by id
+ * @name get/:id
+ * @function
  * @memberof userController
+ * @param {string} id - The mongodb id of the targeted user
  */
 router.get('/:id',
   param('id')
@@ -59,6 +66,8 @@ router.get('/:id',
 
 /**
  * Create a user
+ * @name post/
+ * @function
  * @memberof userController
  */
 router.post('/', async (req, res) => {
